@@ -1,0 +1,33 @@
+{% extends 'useraccount/base.html' %} {% load staticfiles %} {% block title %}Welcome to e-library{% endblock title %} {% block inner_content %} {% for book in book_attached %}
+
+<div class="container">
+    <div class="row">
+        <div class="container" style="margin-top:60px;">
+
+            <div style="margin-right:20px" class="thumbnail col-md-5 col-sm-4">
+                <p><strong>Book Title: </strong>{{ book.title|title }}</p>
+                <p><strong>Authors: </strong>{{ book.display_authors }}</p>
+                <p><strong>Genre: </strong>{{ book.display_genre }}</p>
+                <p><strong>Book Price: </strong> {{ book.price }}</p>
+                <div class="">
+                    <a href="#"><button class="btn btn-sm btn-primary">Read Book</button></a>
+                    <a href="{% url 'catalog:borrow' book.key %}"><button class="btn btn-sm btn-primary">Borrow</button></a>
+                    <a href="#"><button class="btn btn-sm btn-primary">Buy</button></a>
+                </div>
+
+            </div>
+
+            <div class="thumbnail col-md-5 col-sm-4">
+                <p>{{ book.image }}</p>
+            </div>
+
+
+
+        </div>
+        <div class="" style="text-align:justify;">
+            <p>{{ book.summary }}</p>
+        </div>
+    </div>
+</div>
+
+{% endfor %} {% endblock inner_content %}

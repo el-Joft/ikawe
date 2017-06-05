@@ -1,0 +1,101 @@
+{% extends 'useraccount/base.html' %} {% load staticfiles %} {% block title %}Welcome to ikawe{% endblock title %}
+
+<!--[if lt IE 9]>
+<script src="assets/plugins/iesupport/html5shiv.js"></script>
+<script src="assets/plugins/iesupport/respond.min.js"></script>
+<![endif]-->
+
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">
+    window.$zopim || (function(d, s) {
+        var z = $zopim = function(c) {
+                z._.push(c)
+            },
+            $ = z.s =
+            d.createElement(s),
+            e = d.getElementsByTagName(s)[0];
+        z.set = function(o) {
+            z.set.
+            _.push(o)
+        };
+        z._ = [];
+        z.set._ = [];
+        $.async = !0;
+        $.setAttribute("charset", "utf-8");
+        $.src = "http://v2.zopim.com/?34pU6k88ebFCrYKjuL1Btc9pm0Zc02q1";
+        z.t = +new Date;
+        $.
+        type = "text/javascript";
+        e.parentNode.insertBefore($, e)
+    })(document, "script");
+</script>
+<!--End of Zopim Live Chat Script-->
+</head>
+
+<body>
+
+    <div class="row book-row">
+
+        {% for book in book_list %}
+        <div class="col-sm-2">
+            <a href="{% url 'catalog:read' %}">
+
+                <img class="img-responsive" src="{{ book.image.url }}" alt="">
+                <div class="title">{{book.title}}</div>
+                <!--end title -->
+                <div class="author">{{book.author}}</div>
+                <!--end author -->
+                <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i></div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {{ name }}
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-3 col-sm-6">
+
+    <div class="thumbnail no-border no-padding">
+        <div class="media">
+            <a class="media-link tab-thumbnail" data-gal="prettyPhoto" href="book_details/978-0399562129.html">
+                <img src="uploads/Book_Covers/book-1481650848.3.jpg" alt="High-Hanging Fruit: Build Something Great By Going Where No One Else Will" style="width:200px;" />
+                <span class="icon-view"><strong><i class="fa fa-eye"></i></strong></span>
+            </a>
+        </div>
+        <div class="caption text-center">
+            <h4 class="caption-title">
+                <a href="book_details/978-0399562129.html">
+                                                                                                                                                    High-Hanging Fruit: Build...
+                                                                                    </a>
+            </h4>
+            | <span class="label label-default">paperback</span>
+            <div style="margin-bottom:5px;">
+                <span>Mark Rampolla | </span>
+                <span class="label label-danger" style="font-size:10px;">Adult</span>
+            </div>
+
+            <a class="btn btn-theme btn-theme-xs borrow" href="#" data-isbn="978-0399562129" data-title="High-Hanging Fruit: Build Something Great By Going Where No One Else Will" data-author="Mark Rampolla" data-id="638" data-poster="uploads/Book_Covers/book-1481650848.3.jpg"
+                data-format="paperback" data-author-id="686">Borrow</a>
+
+        </div>
+    </div>
+</div>

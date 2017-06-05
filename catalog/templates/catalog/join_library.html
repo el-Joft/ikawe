@@ -1,0 +1,347 @@
+{% extends 'catalog/base.html' %}
+{% load staticfiles %}
+{% block title %}
+{% endblock title %}
+{% block inner_content %}
+{% if messages %}
+{% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %}
+{% endif %}
+{% if reg_form %}
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+        <!-- PAGE -->
+        <section class="page-section text-center error-page">
+            <div class="container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="modal-content centralize_container" style="">
+                                <div class="modal-header">
+                                    <a href="index.html" style="float:left;"><span class="glyphicon glyphicon-chevron-left" style="margin-right:10px;"></span>Home</a>
+                                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                                    <h4 class="modal-title">Join the Library<span class="category_small" style="text-transform:lowercase;margin-left:10px;">* please fill up all fields</span></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputEmail">First Name</label>
+                                                    <input type="text" class="form-control" id="firstname" placeholder="First Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputEmail">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword">Password <span class="category_small" style="text-transform:lowercase;">* minimum of six(6) characters</span></label>
+                                                    <input type="password" class="form-control" id="password"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword">Confirm Password</label>
+                                                    <input type="password" class="form-control" id="confirm_password"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputEmail">Email</label>
+                                                    <input type="email" class="form-control" id="email" placeholder="yourname@email.com">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword">Phone</label>
+                                                    <input type="text" class="form-control" id="phone" placeholder="i.e 080xxxxxxxx"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword">Address</label>
+                                                    <textarea cols="20" rows="5" class="form-control" id="address" placeholder="your address"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword">School</label>
+                                                    <textarea cols="20" rows="5" class="form-control" id="school" placeholder="name of your school"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword" style="display:block;">What kind of books do you enjoy reading</label>
+
+                                                    <select class="selectpicker" data-style="btn-primary" id="kind_of_books" multiple>
+                                                                                                                                                                                    <option value="4">Children</option>
+                                                                                                                            <option value="3">Pre-Teen</option>
+                                                                                                                            <option value="2">Teen</option>
+                                                                                                                            <option value="1">Adult</option>
+                                                                                                                                                                        </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword" style="display:block;">How many books do you read in a month</label>
+                                                    <select class="selectpicker" data-style="btn-primary" id="no_of_books" >
+                                                        <option value="1" selected="selected">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword" style="display:block;">Gender</label>
+                                                    <select class="selectpicker" data-style="btn-primary" id="gender">
+                                                        <option value="1">Male</option>
+                                                        <option value="2">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="text-align:left;">
+                                                    <label for="inputPassword" style="display:block;">Select a Plan</label>
+                                                    <div class="panel-group payments-options" id="accordion" role="tablist" aria-multiselectable="true">
+                                                        <div class="panel radio panel-default">
+                                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                                <h4 class="panel-title">
+                                                                    <a  data-toggle="collapse" data-plan="1" data-parent="#accordion" href="#collapse1" aria-expanded="false" aria-controls="collapseOne" class="collapsed plan_choosen">
+                                                                        <span class="dot"></span> Basic
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1" aria-expanded="false" style="height: 0px;">
+                                                                <div class="panel-body">
+                                                                    <div class="alert alert-success" role="alert" style="text-align:left;">
+                                                                        <p>Free membership - Keep borrowed book for up to 2 weeks only.</p><p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="headingTwo">
+                                                                <h4 class="panel-title">
+                                                                    <a class="collapsed plan_choosen" data-toggle="collapse" data-plan="2" data-parent="#accordion" href="#collapse2" aria-expanded="false" aria-controls="collapseTwo">
+                                                                        <span class="dot"></span> Advance
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2" aria-expanded="false" style="height: 0px;">
+                                                                <div class="panel-body">
+                                                                    <div class="alert alert-success" role="alert"  style="text-align:left;">
+                                                                        <p>For Professional books and text books only. Membership Fees apply. Keep borrowed book for up to 4 weeks only.</p><p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="text-align:left;color:#000000;">
+                                                <h6>TERMS & CONDITIONS</h6>
+                                                <p>
+                                                <ul class="list-unstyled icon-list arrow-right">
+                                                    <li>All members must present a valid e-Library Africa library card at the office to pick up books borrowed online. New members registered online must pick up Ignite Africa Library card at the Admin Office upon the first visit to pick up borrowed book.</li>
+                                                    <li>Borrowed books must be returned on or before the due date. As long as an item is not overdue or required by another borrower, it may be renewed by contacting the Ignite Africa Library by telephone. High Demand books may be renewed for a maximum of 3 days; all other loans may be renewed for up to 10 days. </li>
+                                                    <li>When requested by another borrower, books must be returned by the new due date shown on the recall notice. This date overrides the original due date.</li>
+                                                    <li>Borrowing options are available for members who are physically unable to visit the Ignite library office. Please contact the office by phone for further information.</li>
+                                                    <li>Advanced members can request a book  e-Library Africa Library may not have in stock, and it will be made available to the member. A minimum of 4 weeks notice is required for this request.</li>
+                                                    <li>All members must not cause any form of damage or loss of the books. Books must be returned in good condition, as was picked up, and on time.</li>
+                                                    <li>A book that is claimed to have been returned by a borrower is marked as 'Claimed Return' in the borrower's record. If the book cannot be located in the library after searching for one month, the item will be considered lost and a replacement charge will be added to the borrower's record.</li>
+                                                    <li>Fines may accrue for overdue book that was not renewed; hence, are added to a borrower's record when items are returned.</li>
+                                                    <li>All members are solely responsible for the books borrowed, while in the possession of the member. </li>
+                                                    <li>Ignite Africa reserves the right to terminate a borrowers membership for reason of misconduct, or unresolved misappropriation of Ignite Africa Library books.</li>
+                                                </ul>
+                                                </p>
+                                                <p>
+                                                    <input type="checkbox" value="1" id="join_terms_conditions"/>
+                                                    I agree to abide by the Terms and Conditions of Ignite Africa Library:
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <span id="progress-signup"></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-primary join_library">Join</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- /PAGE -->
+
+    </div>
+    <!-- /CONTENT AREA -->
+    {% endif %}
+    {% endblock inner_content %}
+    <!-- FOOTER -->
+    <!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4 class="widget-title">About Ignite Book Project</h4>
+                        <p>Literary degradation, whether in the form of illiteracy or alliteracy, is not commensurate with sustainable development. Back in the days, a lot of us grew up reading to be successful in a fiercely competitive world. The bookshops were there for people to purchase books. The schools... <a href="about/book_project.html" style="color:#e47911;">read more</a></p>
+                        <ul class="social-icons">
+                            <li><a href="https://www.facebook.com/pages/Ignite-Africa-Book-Club/720271194768295" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="mailto:info@igniteafricalibrary.org" class="email"><i class="fa fa-envelope-o"></i></a></li>
+                            <!--<li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4 class="widget-title">Volunteer</h4>
+                        <p>Ignite Africa Readers are Leaders. Reading Partners (Volunteers) Needed!</p>
+                        <form>
+                            <div class="form-group">
+                                <a href="volunteer.html" class="btn btn-theme btn-theme-xs" style="color:#ffffff;">Volunteer</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget widget-categories">
+                        <h4 class="widget-title">Information</h4>
+                        <ul>
+                            <li><a href="about/book_project.html">Book Clubs</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="terms_conditions.html">Terms and Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget widget-tag-cloud">
+                        <h4 class="widget-title">Categories</h4>
+                        <ul>
+                                                           <li>
+                                    <a href="category/Children.html">Children</a>
+                                </li>
+                                                            <li>
+                                    <a href="category/Pre-Teen.html">Pre-Teen</a>
+                                </li>
+                                                            <li>
+                                    <a href="category/Teen.html">Teen</a>
+                                </li>
+                                                            <li>
+                                    <a href="category/Adult.html">Adult</a>
+                                </li>
+                                                    </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-meta">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="copyright">Copyright 2015 Ignite Africa Library   |   All Rights Reserved  </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="payments">
+                        <!--<ul>
+                            <li><img src="assets/img/preview/payments/visa.jpg" alt=""/></li>
+                            <li><img src="assets/img/preview/payments/mastercard.jpg" alt=""/></li>
+                            <li><img src="assets/img/preview/payments/paypal.jpg" alt=""/></li>
+                            <li><img src="assets/img/preview/payments/american-express.jpg" alt=""/></li>
+                            <li><img src="assets/img/preview/payments/visa-electron.jpg" alt=""/></li>
+                            <li><img src="assets/img/preview/payments/maestro.jpg" alt=""/></li>
+                        </ul>-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /FOOTER -->
+    <!-- /FOOTER -->
+
+    <div id="to-top" class="to-top"><i class="fa fa-angle-up"></i></div>
+
+</div>
+<!-- /WRAPPER -->
+
+<!-- JS Global -->
+<!-- JS Global -->
+<script src="assets/plugins/jquery/jquery-1.11.1.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="assets/plugins/superfish/js/superfish.min.js"></script>
+<!--<script src="assets/plugins/prettyphoto/js/jquery.prettyPhoto.js"></script>-->
+<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
+<script src="assets/plugins/jquery.sticky.min.js"></script>
+<script src="assets/plugins/jquery.easing.min.js"></script>
+<script src="assets/plugins/jquery.smoothscroll.min.js"></script>
+<script src="assets/plugins/smooth-scrollbar.min.js"></script>
+
+<!-- JS Page Level -->
+<script src="assets/js/constants.js"></script>
+<script src="assets/js/jquery.marquee.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/constants.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/js/member.js"></script>
+<script src="assets/js/book.js"></script>
+<script src="assets/js/volunteer.js"></script>
+<script src="assets/js/donate.js"></script>
+<script src="assets/js/search.js"></script>
+
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/plugins/jquery.cookie.js"></script>
+<!--<script src="assets/js/theme-config.js"></script>-->
+<!--<![endif]-->
+
+</body>
+
+<!-- Mirrored from www.igniteafricalibrary.org/join_library by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 06:11:15 GMT -->
+</html>

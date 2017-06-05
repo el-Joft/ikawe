@@ -1,0 +1,139 @@
+{% extends 'useraccount/base.html' %} {% load staticfiles %} {% block title %}Welcome to e-library{% endblock title %} {% block inner_content %} {% for book in book_attached %}
+
+
+
+
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+
+
+            <div class="container">
+                <div>
+                    <h1>Borrow</h1>
+                </div>
+                <div>
+                    <p><strong>Book Title: </strong>{{ book.title|title }}</p>
+                    <p><strong>Authors: </strong> {{ book.display_authors }}</p>
+                </div>
+
+                <form action="#" method="post">
+
+
+                    {% csrf_token %}
+
+                    <div class="input-group input-group">
+                        <label>Input the number of days</label>
+                        <input type="text" class="form-control" id="days" placeholder="Number of days" aria-describedby="sizing-addon1" maxlength="10" required>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <button id="borrow" class="btn btn-primary" type="submit">continue</button>
+                    </div>
+                </form>
+
+
+                <div id="my-modal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Sorry! You can only borrow for 30 days or less &#9785;</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $("#borrow").click(function(e) {
+                            e.preventDefault();
+                            var num_of_days = $("#days").val();
+                            if (num_of_days > 30) {
+
+                                $('#my-modal').modal('show');
+
+
+                            } else {
+                                if (num_of_days <= 7) {
+                                    var price = 500;
+
+                                } else if (num_of_days <= 14) {
+                                    var price = 1000;
+
+                                } else if (num_of_days <= 21) {
+                                    var price = 1500;
+                                } else {
+                                    var price = 2000;
+                                }
+
+
+
+                                var a = "{{ book.price }}";
+                                var pre_total = a / 2;
+                                var total = price + pre_total;
+
+
+                                document.getElementById("demo").innerHTML = total;
+                            }
+                            $('input[type="text"]').val('');
+                        });
+
+                    });
+                </script>
+
+
+                <style>
+                    li {
+                        list-style-type: circle;
+                    }
+                </style>
+            </div>
+        </div>
+
+
+        <div class="col-xs-6 col-md-5">
+            <a href="#" class="thumbnail">
+                <p>Total amount: </p>
+                <p id="demo">&#8358; </p>
+                <p>
+                    <button class="btn btn-primary">continue to payment</button>
+                </p>
+            </a>
+        </div>
+
+
+
+    </div>
+    <hr>
+    <div>
+        <h3 style="margin-top:10px; text-align:center;">Terms and Conditon to Borrow</h3>
+        <ol class="list-group">
+            <li class="list-group-item">You can only borrow book not more than 30 days (4 weeks)</li>
+            <li class="list-group-item">Enter the number of days you want to use the book</li>
+            <li class="list-group-item">Your are required to pay a refundable amount which is calculated based on:
+                <ul>
+                    <li>the number of days you want to use the book</li>
+                    <li>the current value of the book</li>
+                </ul>
+            </li>
+            <li class="list-group-item"> You will be charged if:
+                <ul>
+                    <li>The book borrowed is returned has been roughly handled i.e torn or stained</li>
+                    <li>The book is not returned in the due date</li>
+                </ul>
+            </li>
+
+        </ol>
+    </div>
+</div>
+
+</div>
+
+
+{% endfor %} {% endblock inner_content %}

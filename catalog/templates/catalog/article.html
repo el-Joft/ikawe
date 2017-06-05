@@ -1,0 +1,9 @@
+<!-- to use and bring out articles -->
+
+{% for article in articles %}
+<a href="/articles/get/{{ article.id }}/ "></a>
+
+<p>{{ article.body|lower|truncatewords:"10" }}</p>
+
+
+{% endfor%}

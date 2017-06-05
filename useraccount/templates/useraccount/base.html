@@ -1,0 +1,523 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>e-Library</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="{% static 'catalog/ico/favicon.jpg'%}">
+
+    <!-- CSS Global -->
+    <link href="{% static 'catalog/plugins/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/bootstrap-select/css/bootstrap-select.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/fontawesome/css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/prettyphoto/css/prettyPhoto.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/owl-carousel2/assets/owl.carousel.min.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/owl-carousel2/assets/owl.theme.default.min.css'%}" rel="stylesheet">
+    <link href="{% static 'catalog/plugins/animate/animate.min.css'%}" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="{% static 'catalog/css/theme.css'%}" rel="stylesheet" />
+    <link href="{% static 'catalog/css/custom.css'%}" rel="stylesheet" />
+    <link href="{% static 'catalog/css/theme-orange-1.css'%}" rel="stylesheet" id="theme-config-link">
+
+    <!-- Head Libs -->
+    <script src="{% static 'catalog/plugins/modernizr.custom.js'%}"></script>
+
+    <!--[if lt IE 9]>
+<script src="assets/plugins/iesupport/html5shiv.js"></script>
+<script src="assets/plugins/iesupport/respond.min.js"></script>
+<![endif]-->
+
+    <!--Start of Zopim Live Chat Script-->
+    <script type="text/javascript">
+        window.$zopim || (function(d, s) {
+            var z = $zopim = function(c) {
+                    z._.push(c)
+                },
+                $ = z.s =
+                d.createElement(s),
+                e = d.getElementsByTagName(s)[0];
+            z.set = function(o) {
+                z.set.
+                _.push(o)
+            };
+            z._ = [];
+            z.set._ = [];
+            $.async = !0;
+            $.setAttribute("charset", "utf-8");
+            $.src = "http://v2.zopim.com/?34pU6k88ebFCrYKjuL1Btc9pm0Zc02q1";
+            z.t = +new Date;
+            $.
+            type = "text/javascript";
+            e.parentNode.insertBefore($, e)
+        })(document, "script");
+    </script>
+    <!--End of Zopim Live Chat Script-->
+</head>
+
+<body id="home" class="wide">
+
+
+    <!-- WRAPPER -->
+    <div class="wrapper">
+        <!-- Adding Popups -->
+
+
+    </div>
+    <!-- /Popup: signup dialog -->
+    <!-- Popup: signin modal dialog -->
+    <div class="modal fade" id="popup-sign-in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Sign In</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="{% url 'useraccount:login' %}" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:-15px;">
+
+                                    {% csrf_token %} {{ login_form.as_p }} {{ login_form.errors }}
+                                    <div class="col-md-4">
+                                        <input class="btn btn-primary" type="submit" name="login" value="login">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Popup: signin modal dialog -->
+    <!-- Popup: signout modal dialog -->
+    <div class="modal fade" id="popup-sign-out">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Sign Out</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h4 style="color:#000000;text-align: center;">Are you sure you want to sign out?</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span id="progress-signout"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary sign_out">Yes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Popup: signout modal dialog -->
+    <!-- Popup: busy -->
+    <div class="modal fade" id="popup-busy">
+        <div class="modal-dialog  modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ikawe</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <span id="busy-container" class="centralize_container"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <script>
+        var accessToken = '';
+        var user_logged = '';
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1451097135205070',
+                status: true,
+                cookie: true,
+                xfbml: true,
+                version: 'v2.3'
+            });
+
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    var access_token = FB.getAuthResponse()['accessToken'];
+                    accessToken = access_token;
+                    console.log('Access Token = ' + access_token);
+                    FB.api('/me', function(response) {
+                        user_logged = response;
+                        console.log('Good to see you, ' + response.name + '.');
+                    });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {
+                scope: 'offline_access,publish_stream,manage_pages,publish_actions,status_update'
+            });
+
+            FB.Event.subscribe('comment.create', function(response) { //trigger when comment is created
+                console.log(response);
+                var body = response.message;
+                FB.api('/me', {
+                    fields: 'last_name'
+                }, function(response) {
+                    console.log(response);
+                });
+                FB.getLoginStatus(function(response) {
+                    console.log('status: ' + response);
+                    FB.api('/me/feed', 'post', {
+                        message: body
+                    }, function(response) {
+                        if (!response || response.error) {
+                            console.log(response.error);
+                        } else {
+                            console.log('Post ID: ' + response.id);
+                        }
+                    });
+
+                });
+
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "http://connect.facebook.net/en_US/sdk.js&amp;target=top";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+
+        //This function will post to a Facebook page that has the ID $fb_page_id.
+        //The post format is like this, [NAME said:] POST e.g: [ObyYou said:] this is a test.
+        //Of course, you can change the format the way you want.
+        //You have to have an access key to have the permission to post on that page.
+        //Use the two sites at the bottom of this answer for help, (remember if you
+        //want to hard-code the access token, you have to create a permenant access token).
+        //Note that some variables and functions are PHP, since my JavaScript code is
+        //actually inside a PHP file.
+        function post_to_fb(commentText, commentUsername, commentLink) {
+            //var strURL = 'https://graph.facebook.com/720271194768295/feed';
+            //var params = 'link=' + commentLink + '&message=[' + commentUsername +'+said:]+' + commentText + '&access_token="'+accessToken+'"';
+
+            var xmlHttpReq;
+            xmlHttpReq = new XMLHttpRequest();
+            xmlHttpReq.open('POST.html', "https://graph.facebook.com/$USERID/accounts?access_token=$USER_ACCESS_TOKEN", true);
+            xmlHttpReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttpReq.send(params);
+        }
+    </script>
+
+    <header class="header fixed header-logo-left">
+        <!-- Header top bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-left">
+                    <!-- <ul class="list-inline">
+                 <li class="icon-user"><a href="login.html"><img src="assets/img/icon-1.png" alt=""/> <span>Login</span></a></li>
+                 <li class="icon-form"><a href="login.html"><img src="assets/img/icon-2.png" alt=""/> <span>Not a Member? <span class="colored">Sign Up</span></span></a></li>
+                 <li><a href="mailto:support@yourdomain.com"><i class="fa fa-envelope"></i> <span>support@yourdomain.com</span></a></li>
+             </ul>-->
+                </div>
+                <div class="top-bar-right">
+                    <ul class="list-inline">
+
+
+
+                        {% if request.user.is_authenticated %}
+                        <li class="icon-form"><button type="button" class="btn btn-theme btn-theme-xs" data-toggle="modal" data-target="#popup-sign-in"> Welcome! {{ request.user.username }}</button></li>
+                        <li class="icon-form"><a href="{% url 'useraccount:logout' %}"><button type="button" class="btn btn-theme btn-theme-xs" >Sign out</button></a></li>
+                        <li><a href=""><span>last visit: {{ request.user.last_login|date:"D d M Y" }}</span></a></li>
+                        {% else %}
+
+                        <li class="icon-form"><button type="button" class="btn btn-theme btn-theme-xs" data-toggle="modal" data-target="#popup-sign-in">Sign In</button></li>
+                        <li class="icon-form"><button type="button" class="btn btn-theme btn-theme-xs">Welcome! Guest</button></li>
+                        <li class="icon-user"><a href="{% url 'useraccount:register' %}" class="btn btn-theme btn-theme-xs">Join the library</a></li>
+                        {% endif %}
+                        <li><a href="mailto:ikawe@gmail.com"><i class="fa fa-envelope"></i> <span>ikawe@gmail.com</span></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- /Header top bar -->
+        <div class="header-wrapper">
+            <div class="container">
+
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="/"><img src="{% static 'catalog/img/logo.png'%}" alt="ikawe" style="height: 40px;" /></a>
+                </div>
+                <!-- /Logo -->
+
+                <!-- Header search -->
+                <div class="header-search">
+                    <input class="form-control book_search_title" type="text" placeholder="What are you looking for?" />
+                    <select class="selectpicker header-search-select book_search_category" data-live-search="true" data-toggle="tooltip" title="Select">
+        <option value="0">select a category</option>
+                    <option value="4">Children</option>
+                    <option value="3">Pre-Teen</option>
+                    <option value="2">Teen</option>
+                    <option value="1">Adult</option>
+            </select>
+                    <button class="search_button" style="background-color:#3a9ad9;"><i class="fa fa-search"></i></button>
+
+                </div>
+                <!-- /Header search -->
+
+                <!-- Header shopping cart -->
+                <div class="header-cart">
+                    <div class="cart-wrapper">
+                        <!--<a href="wishlist.html" class="btn btn-theme-transparent hidden-xs hidden-sm"><i class="fa fa-heart"></i></a>
+        <a href="compare-products.html" class="btn btn-theme-transparent hidden-xs hidden-sm"><i class="fa fa-exchange"></i></a>-->
+                        <a href="#" class="btn btn-theme-transparent get-shelf">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="hidden-xs"> borrowed book(s) </span> <i class="fa fa-angle-down"></i>
+                        </a>
+                        <!-- Mobile menu toggle button -->
+                        <a href="#" class="menu-toggle btn btn-theme-transparent"><i class="fa fa-bars"></i></a>
+                        <!-- /Mobile menu toggle button -->
+                    </div>
+                </div>
+                <!-- Header shopping cart -->
+
+            </div>
+        </div>
+        <div class="navigation-wrapper">
+            <div class="container">
+                <!-- Navigation -->
+                <nav class="navigation closed clearfix">
+                    <a href="#" class="menu-toggle-close btn"><i class="fa fa-times"></i></a>
+                    <ul class="nav sf-menu">
+                        <li class="active"><a href="{% url 'catalog:index' %}">Home</a></li>
+                        <!--<li ><a href="message_from_founder.html">From the founder</a></li>-->
+                        <li><a href="#" class="sf-with-ul">Categories</a>
+
+                            <ul>
+                                <li>
+                                    <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                    <a href="category/Children.html">Children</a>
+                                </li>
+                                <li>
+                                    <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                    <a href="category/Pre-Teen.html">Pre-Teen</a>
+                                </li>
+                                <li>
+                                    <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                    <a href="category/Teen.html">Teen</a>
+                                </li>
+                                <li>
+                                    <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                    <a href="category/Adult.html">Adult</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li>
+                            <a href="#">Blog</a>
+
+                        </li>
+                        <li><a href="{% url 'catalog:book' %}">Catalogs</a></li>
+                        <li>
+                            <a href="event/1.html">Events</a>
+
+                        </li>
+                        <li><a href="#">About Ikawe</a>
+                            <ul>
+                                <li><a href="about/book_project.html">Book Project</a></li>
+                                <li>
+                                    <a href="about/leadership_foundation.html">Leadership Foundation</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+
+
+                    </ul>
+                </nav>
+                <!-- /Navigation -->
+            </div>
+        </div>
+
+        {% block inner_content %} {% endblock inner_content %}
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-widgets">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="widget">
+                                <h4 class="widget-title">About Ikawe</h4>
+                                <p>Literary degradation, whether in the form of illiteracy or alliteracy, is not commensurate with sustainable development. Back in the days, a lot of us grew up reading to be successful in a fiercely competitive world. The
+                                    bookshops were there for people to purchase books. The schools... <a href="about/book_project.html" style="color:#e47911;">read more</a></p>
+                                <ul class="social-icons">
+                                    <li><a href="https://www.facebook.com/Toluene010" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="ottimothy@gmail.com" class="email"><i class="fa fa-envelope-o"></i></a></li>
+                                    <!--<li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>-->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Donate</h4>
+                                <p>Be part of the good works</p>
+                                <form>
+                                    <div class="form-group">
+                                        <a href="volunteer.html" class="btn btn-theme btn-theme-xs" style="color:#ffffff;">Donate</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget widget-categories">
+                                <h4 class="widget-title">Information</h4>
+                                <ul>
+                                    <li><a href="about/book_project.html">Book Clubs</a></li>
+                                    <li><a href="faq.html">FAQs</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="terms_conditions.html">Terms and Conditions</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget widget-tag-cloud">
+                                <h4 class="widget-title">Categories</h4>
+                                <ul>
+                                    <li>
+                                        <a href="category/Children.html">Children</a>
+                                    </li>
+                                    <li>
+                                        <a href="category/Pre-Teen.html">Pre-Teen</a>
+                                    </li>
+                                    <li>
+                                        <a href="category/Teen.html">Teen</a>
+                                    </li>
+                                    <li>
+                                        <a href="category/Adult.html">Adult</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="footer-meta">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="copyright">Copyright 2017 Joft Library | All Rights Reserved </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /FOOTER -->
+
+        <div id="to-top" class="to-top"><i class="fa fa-angle-up"></i></div>
+
+        </div>
+        <!-- /WRAPPER -->
+
+        <!-- JS Global -->
+        <script src="{% static 'catalog/plugins/jquery/jquery-1.11.1.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/bootstrap-select/js/bootstrap-select.js'%}"></script>
+        <script src="{% static 'catalog/plugins/superfish/js/superfish.min.js'%}"></script>
+        <!--<script src="assets/plugins/prettyphoto/js/jquery.prettyPhoto.js"></script>-->
+        <script src="{% static 'catalog/plugins/owl-carousel2/owl.carousel.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/jquery.sticky.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/jquery.easing.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/jquery.smoothscroll.min.js'%}"></script>
+        <script src="{% static 'catalog/plugins/smooth-scrollbar.min.js'%}"></script>
+
+        <!-- JS Page Level -->
+        <script src="{% static 'catalog/js/constants.js'%}"></script>
+        <script src="{% static 'catalog/js/jquery.marquee.js'%}"></script>
+        <script src="{% static 'catalog/js/theme.js'%}"></script>
+        <script src="{% static 'catalog/js/constants.js'%}"></script>
+        <script src="{% static 'catalog/js/home.js'%}"></script>
+        <script src="{% static 'catalog/js/member.js'%}"></script>
+        <script src="{% static 'catalog/js/book.js'%}"></script>
+        <script src="{% static 'catalog/js/volunteer.js'%}"></script>
+        <script src="{% static 'catalog/js/donate.js'%}"></script>
+        <script src="{% static 'catalog/js/search.js'%}"></script>
+
+
+        <!--[if (gte IE 9)|!(IE)]><!-->
+        <script src="{% static 'catalog/plugins/jquery.cookie.js'%}"></script>
+        <!--<script src="assets/js/theme-config.js"></script>-->
+        <!--<![endif]-->
+
+
+</body>
+
+<!-- Mirrored from www.igniteafricalibrary.org/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 06:10:47 GMT -->
+
+</html>
