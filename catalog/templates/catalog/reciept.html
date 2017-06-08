@@ -1,0 +1,60 @@
+{% extends 'useraccount/base.html' %} {% load staticfiles %} {% block title %}Welcome to e-library{% endblock title %} {% block inner_content %}
+<!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<div class="container " style="border: 3px solid #3a9ad9; padding:30px 20px; width: 50%; text-align: justify; margin:auto;">
+    <div class="row ">
+        <div class="receipt_head" style="text-align:center;">
+
+            <h2>Ikawe Borrow Reciept</h2>
+            <p>Reading is a conversation. All books talk. But a good book listens as well.</p>
+        </div>
+        <div class="receipt_body">
+            <ol>
+                <hr>
+                <h4>Book Info</h4>
+                <li><strong>Book Title : </strong>{{ book.title|title }}</li>
+                <li><strong>Book Author(s) : </strong>{{ book.display_authors }}</li>
+                <li><strong>Book Genre : </strong>{{ book.display_genre }}</li>
+                <li><strong>Book Class : </strong></li>
+            </ol>
+            <div>
+                <hr>
+                <h4>Your Info</h4>
+                <p><strong>Name:  </strong>{{request.user.username}}</p>
+                <p><strong>Email: </strong>{{request.user.email}}</p>
+
+            </div>
+            <hr>
+            <div>
+                <h4>Our Info</h4>
+                <p><i class="fa fa-building" aria-hidden="true"></i> Switch Innovation Express LTD, Montgomery Rd, Yaba, Lagos</p>
+                <p><i class="fa fa-phone" aria-hidden="true"></i> 08136681130</p>
+                <p><i class="fa fa-envelope" aria-hidden="true"></i> ottimothy@gmail.com</p>
+                <p><i class="fa fa-globe" aria-hidden="true"></i> switch.ng</p>
+            </div>
+            <hr>
+            <div>
+                <h4>Cost of Borrow</h4>
+                <p id="to_pay">Amount to Pay: {{ topay }} </p>
+
+            </div>
+            <hr>
+            <div>
+                <p>Please take this reciept to our office or any of our branch close to you to borrow the book!</p>
+                <h5>Borrow ID: {{ borrow_id }} </h5>
+
+                <h5><svg style="width:600px;" id="barcode"></svg></h5>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock inner_content %} {% block extra_content %}
+<script>
+    JsBarcode("#barcode", "{{ book.title }}");
+</script>
+{% endblock extra_content %}

@@ -18,3 +18,6 @@ class BorrowForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ( 'length_of_borrow ',)
+
+
+

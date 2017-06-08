@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import  include
 from django.conf.urls.static import static
 from . import views
+from django.http import HttpResponse
 
 #from catalog.feeds import LatestEntriesFeed
 from catalog.feeds import ArticlesFeed
@@ -20,6 +21,9 @@ urlpatterns = [
 
     url(r'^borrow/(?P<book_key>[-\w]+)/$', views.borrowView, name="borrow"),
 
+    url(r'^book/check/', views.searchInView, name="check"),
+
+    url(r'^borrow/(?P<book_key>[-\w]+)/reciept', views.recieptView, name="reciept"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

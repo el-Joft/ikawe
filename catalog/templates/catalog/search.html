@@ -1,0 +1,48 @@
+{% extends 'useraccount/base.html' %} 
+
+{% load staticfiles %} 
+
+{% block title %}Welcome to e-library{% endblock title %} 
+
+{% block inner_content %} 
+
+{% for books in book %} 
+
+<div class="container" style="margin: 30px 0px;">
+
+	<div class="row">
+	  <div class="col-sm-4 col-md-4">
+	    <div class="thumbnail">
+	      <img src="{{ book.image }}" alt="{{ book.title }}">
+	      <div class="caption">
+	        <p>{{ books.title }}</p>
+	        <p>{{ books.display_authors }}</p>
+	        <p>{{ books.price }}</p>
+	        <p>{{ books.language }}</p>
+
+	        {% if request.user.is_authenticated %}
+
+
+            <!-- Small modal -->
+            <a href="{% url 'catalog:borrow' books.key %}"><button type="button" class="btn btn-primary">borrow</button></a> 
+            {% else %}
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">borrow</button> 
+            {% endif %}
+            <a href=""><button type="button" class="btn pull-right btn-primary">Buy this book</button></a>
+	      </div>
+	    </div>
+	  </div>
+	
+
+
+
+</div>
+</div>
+	
+	
+{% endfor %}{% endblock %}
+
+<br>
+<hr>
+<div class="container"></div>

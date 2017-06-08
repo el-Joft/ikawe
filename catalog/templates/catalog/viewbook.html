@@ -10,11 +10,33 @@
                 <p><strong>Genre: </strong>{{ book.display_genre }}</p>
                 <p><strong>Book Price: </strong> {{ book.price }}</p>
                 <div class="">
+                    {% if request.user.is_authenticated %}
                     <a href="#"><button class="btn btn-sm btn-primary">Read Book</button></a>
-                    <a href="{% url 'catalog:borrow' book.key %}"><button class="btn btn-sm btn-primary">Borrow</button></a>
-                    <a href="#"><button class="btn btn-sm btn-primary">Buy</button></a>
+
+                    <a href="{% url 'catalog:borrow' book.key %}"><button class="btn btn-sm btn-primary">Borrow</button></a> {% else %}
+
+                    <button data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-primary">Read Book</button>
+
+                    <button data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-primary">Borrow</button> {% endif %}
+                    <button class="btn btn-sm btn-primary">Buy</button>
                 </div>
 
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Ikawe</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Please sign up or login..</p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <div class="thumbnail col-md-5 col-sm-4">

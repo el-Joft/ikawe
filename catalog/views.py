@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from useraccount.forms import LoginForm, RegistrationForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.decorators import login_required
 
 #from django.urls import reverse #Used to generate urls by reversing the URL patterns
 
@@ -95,8 +95,6 @@ def viewBook(request, book_key = None ):
     print book_key
     book_attached = Book.objects.filter(key = book_key)
     #book_id = BookInstance.objects.filter(pk = request.GET.get(''))
-    print "Tolu"
-    print book_attached
 
     context = {}
     context['book_lists'] = book_lists
@@ -106,6 +104,7 @@ def viewBook(request, book_key = None ):
     return render(request, 'catalog/viewbook.html', context)
 
 
+@login_required
 def borrowView(request, book_key=None):
     book_attached = Book.objects.filter(key = book_key)
 
@@ -114,7 +113,10 @@ def borrowView(request, book_key=None):
 
 
 
-    # if request.Post:
+
+    # if request.method == "POST":
+    #     print "1234567890088"
+
     #     form = BorrowForm(request.POST)
     #     if form.is_valid():
     #         form.save()
@@ -129,5 +131,58 @@ def borrowView(request, book_key=None):
     return render(request,'catalog/borrow.html', context)
 
 
+import os
+def p(request):
+    with open('/path/to/my/file.pdf', 'r') as pdf:
+        response = HttpResponse(pdf.read(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+        return response
+    pdf.closed
 
 
+
+
+def searchInView(request):
+
+    if request.method == "POST":
+
+        search_box = request.POST['search_box']
+    else:
+        search_text = ''
+
+
+    book = Book.objects.filter(title__contains = search_box)
+
+    context = {}
+    print book
+    context['book'] = book
+
+
+
+    return render(request, 'catalog/search.html', context)
+
+import os,binascii
+
+def recieptView(request, book_key = None):
+
+
+
+    if request.method == "POST":
+
+
+        topay = request.POST['topay']
+
+        # topay =
+        # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+
+    else:
+        topay = ''
+
+    book = Book.objects.get(key=book_key)
+    borrow_id = binascii.b2a_hex(os.urandom(12))
+    context = {}
+    context['book'] = book
+    context['borrow_id'] = borrow_id
+    context['topay'] = topay
+
+    return render(request,'catalog/reciept.html', context)

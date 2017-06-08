@@ -1,7 +1,11 @@
 {% extends 'useraccount/base.html' %} {% load staticfiles %} {% block title %}Welcome to e-library{% endblock title %} {% block inner_content %} {% for book in book_attached %}
 
 
-
+<style>
+    button {
+        color: #3a9ad9;
+    }
+</style>
 
 <hr>
 <div class="container">
@@ -25,7 +29,7 @@
 
                     <div class="input-group input-group">
                         <label>Input the number of days</label>
-                        <input type="text" class="form-control" id="days" placeholder="Number of days" aria-describedby="sizing-addon1" maxlength="10" required>
+                        <input type="text" class="form-control days" id="days" placeholder="Number of days" aria-describedby="sizing-addon1" maxlength="10" required>
                     </div>
                     <div style="margin-top:10px;">
                         <button id="borrow" class="btn btn-primary" type="submit">continue</button>
@@ -38,7 +42,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Title</h4>
+                                <h4 class="modal-title">Ikawe</h4>
                             </div>
                             <div class="modal-body">
                                 <p>Sorry! You can only borrow for 30 days or less &#9785;</p>
@@ -48,40 +52,98 @@
                     </div>
                 </div>
 
+
+                <div id="themodal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Ikawe</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Sorry! Please enter the number of days to use the book &#9785;</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <div id="modal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Ikawe</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>&#9761;</p>
+                                <p> Please enter days in number not alphabets</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
                 <script type="text/javascript">
                     $(document).ready(function() {
                         $("#borrow").click(function(e) {
                             e.preventDefault();
                             var num_of_days = $("#days").val();
-                            if (num_of_days > 30) {
+                            var letters = /^[A-Za-z]+$/;
 
-                                $('#my-modal').modal('show');
-
-
+                            if (num_of_days.match(letters)) {
+                                $('#modal').modal('show');
+                            } else if (num_of_days == "" || num_of_days == "0") {
+                                $('#themodal').modal('show');
+                                return
                             } else {
-                                if (num_of_days <= 7) {
-                                    var price = 500;
 
-                                } else if (num_of_days <= 14) {
-                                    var price = 1000;
+                                if (num_of_days > 30) {
 
-                                } else if (num_of_days <= 21) {
-                                    var price = 1500;
+                                    $('#my-modal').modal('show');
+
+
                                 } else {
-                                    var price = 2000;
+                                    if (num_of_days <= 7) {
+                                        var price = 500;
+
+                                    } else if (num_of_days <= 14) {
+                                        var price = 1000;
+
+                                    } else if (num_of_days <= 21) {
+                                        var price = 1500;
+                                    } else {
+                                        var price = 2000;
+                                    }
+
+
+
+                                    var a = "{{ book.price }}";
+                                    var pre_total = a / 2;
+                                    var total = price + pre_total;
+
+                                    var note = "You are to return the book back in " + num_of_days + " days"
+                                    document.getElementById('note').innerHTML = note;
+                                    document.getElementById("demo").innerHTML = total;
+                                    $('#total_to_pay').val(total);
                                 }
-
-
-
-                                var a = "{{ book.price }}";
-                                var pre_total = a / 2;
-                                var total = price + pre_total;
-
-
-                                document.getElementById("demo").innerHTML = total;
                             }
-                            $('input[type="text"]').val('');
+
                         });
 
                     });
@@ -97,25 +159,45 @@
         </div>
 
 
-        <div class="col-xs-6 col-md-5">
-            <a href="#" class="thumbnail">
-                <p>Total amount: </p>
-                <p id="demo">&#8358; </p>
-                <p>
-                    <button class="btn btn-primary">continue to payment</button>
-                </p>
-            </a>
-        </div>
+        <div style="margin-top:70px; padding:20px;" class="col-xs-6 col-md-5">
+            <div class="thumbnail">
 
+                <p>Total amount: </p>
+
+
+
+                <form action="{% url 'catalog:reciept' book.key %}" method="post">
+                    {% csrf_token %}
+                    <span> &#8358;</span>
+                    <input style="border-width:0px; border:none;" type="hidden" value="" name="topay" id="total_to_pay" required>
+                    <span id="demo"></span>
+
+                    <p id="note"></p>
+                    <button class="btn continue btn-primary" type="submit" value="submit">Continue to Payment</button>
+                </form>
+                <br>
+
+
+                <span><a href="#term">Read </a>Terms and Condition....</span>
+
+            </div>
+        </div>
 
 
     </div>
     <hr>
-    <div>
+    <div id="term">
         <h3 style="margin-top:10px; text-align:center;">Terms and Conditon to Borrow</h3>
         <ol class="list-group">
             <li class="list-group-item">You can only borrow book not more than 30 days (4 weeks)</li>
             <li class="list-group-item">Enter the number of days you want to use the book</li>
+            <li class="list-group-item">A reciept is generated for you, you can:
+                <ul>
+                    <li>print out the reciept show it at the point of borrowing</li>
+                    <li>copy the borrow ID generated on the ID, as it is the most important identifier to borrow a book</li>
+                </ul>
+            </li>
+            <li class="list-group-item">The borrowing of the book and the payment is to be done in any of our offices</li>
             <li class="list-group-item">Your are required to pay a refundable amount which is calculated based on:
                 <ul>
                     <li>the number of days you want to use the book</li>
@@ -133,7 +215,6 @@
     </div>
 </div>
 
-</div>
 
 
 {% endfor %} {% endblock inner_content %}
